@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome — Prompt Injection Shield</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #0f1117; color: #e2e8f0;
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  }
+  .card {
+    max-width: 620px; width: 100%; padding: 2.5rem 2rem;
+    background: #1a1d27; border: 1px solid #2d3148; border-radius: 14px;
+    margin: 2rem;
+  }
+  .logo { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.8rem; }
+  .logo span { font-size: 2.2rem; }
+  .logo h1 { font-size: 1.4rem; font-weight: 800; color: #fff; }
+  .logo .ver { font-size: 0.72rem; color: #6b7280; margin-top: 0.2rem; }
+  h2 { font-size: 0.85rem; font-weight: 700; color: #9ca3af;
+       text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 1.2rem; }
+  .steps { list-style: none; counter-reset: step; }
+  .steps li {
+    counter-increment: step;
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1rem; border-radius: 8px; margin-bottom: 0.6rem;
+    background: #131620; border: 1px solid #2d3148;
+  }
+  .steps li::before {
+    content: counter(step);
+    min-width: 26px; height: 26px; border-radius: 50%;
+    background: #3b4fd8; color: #fff; font-size: 0.75rem; font-weight: 800;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .step-body strong { font-size: 0.88rem; color: #fff; display: block; margin-bottom: 0.25rem; }
+  .step-body p { font-size: 0.78rem; color: #9ca3af; line-height: 1.5; }
+  code {
+    background: #0f1117; border: 1px solid #2d3148; padding: 0.15rem 0.4rem;
+    border-radius: 4px; font-size: 0.73rem; color: #60a5fa; font-family: monospace;
+  }
+  .status-row {
+    margin-top: 1.6rem; padding: 0.9rem 1rem;
+    background: #131620; border: 1px solid #2d3148; border-radius: 8px;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .dot.ok      { background: #22c55e; }
+  .dot.error   { background: #ef4444; }
+  .dot.checking { background: #6b7280; animation: pulse 1.2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+  .status-text { font-size: 0.8rem; }
+  .status-text strong { color: #fff; }
+  .status-text span { color: #9ca3af; display: block; font-size: 0.73rem; margin-top: 0.1rem; }
+  .actions { margin-top: 1.6rem; display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .btn {
+    padding: 0.55rem 1.2rem; border-radius: 7px; font-size: 0.82rem;
+    font-weight: 700; cursor: pointer; border: none; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+  }
+  .btn-primary { background: #3b4fd8; color: #fff; }
+  .btn-primary:hover { background: #4f63e8; }
+  .btn-ghost { background: transparent; color: #9ca3af; border: 1px solid #2d3148; }
+  .btn-ghost:hover { color: #e2e8f0; border-color: #4b5563; }
+  .tip {
+    margin-top: 1.2rem; padding: 0.75rem 1rem;
+    background: #0f1117; border-left: 3px solid #3b4fd8; border-radius: 4px;
+    font-size: 0.76rem; color: #9ca3af; line-height: 1.55;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">
+    <span>🛡</span>
+    <div>
+      <h1>Prompt Injection Shield</h1>
+      <div class="ver">v1.2.0 — installed</div>
+    </div>
+  </div>
+
+  <h2>Setup Checklist</h2>
+
+  <ol class="steps">
+    <li>
+      <div class="step-body">
+        <strong>Install Python dependencies</strong>
+        <p>In Terminal, run:<br>
+        <code>cd prompt-injection-shield/api && pip3 install -r requirements.txt</code></p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <strong>Start the detection API</strong>
+        <p>Run the install script to register the auto-start service:<br>
+        <code>bash service/install.sh</code></p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <strong>Set your API key (optional — enables AI analysis)</strong>
+        <p>Run: <code>python3 service/set-env-vars.py</code><br>
+        Paste your Anthropic API key when prompted.
+        Get a key at <code>console.anthropic.com</code></p>
+      </div>
+    </li>
+    <li>
+      <div class="step-body">
+        <strong>You're done — visit any webpage</strong>
+        <p>The shield icon will show a green <code>OK</code> badge on safe pages
+        and an amber/red score on pages with detected patterns.</p>
+      </div>
+    </li>
+  </ol>
+
+  <div class="status-row">
+    <div class="dot checking" id="status-dot"></div>
+    <div class="status-text">
+      <strong id="status-title">Checking API server…</strong>
+      <span id="status-sub"></span>
+    </div>
+  </div>
+
+  <div class="tip">
+    <strong style="color:#60a5fa">Tip:</strong> The extension skips <code>localhost</code> and browser-internal pages.
+    Navigate to any public website to trigger your first scan, then click the shield icon to see the result.
+  </div>
+
+  <div class="actions">
+    <a class="btn btn-primary" href="http://localhost:7777/dashboard" target="_blank">Open Dashboard</a>
+    <a class="btn btn-ghost" href="https://github.com" target="_blank">View Source</a>
+  </div>
+</div>
+
+<script src="onboarding.js"></script>
+</body>
+</html>

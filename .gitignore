@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.pyo
+.Python
+.venv/
+venv/
+env/
+
+# Database — contains personal scan history, never commit
+*.db
+*.sqlite
+*.sqlite3
+
+# API keys / secrets — injected at runtime via set-env-vars.py
+.env
+.env.*
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon\r
+._*
+
+# Logs
+*.log
+*.err
+
+# Extension build artefacts
+web-ext-artifacts/
+*.xpi
+*.crx
+*.zip
+
+# Office / media files at root (demos, drafts — not source code)
+~$*
+*.tmp
+*.docx
+*.mov
+*.mp4
+
+# Node (if ever added)
+node_modules/
+package-lock.json
+
+# Empty folders (git doesn't track them)
+dashboard/

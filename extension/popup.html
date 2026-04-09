@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+         background: #0f1117; color: #e2e8f0; width: 320px; }
+  .header { background: #1a1d27; padding: 0.9rem 1rem;
+            border-bottom: 1px solid #2d3148;
+            display: flex; align-items: center; gap: 0.6rem; }
+  .header h1 { font-size: 0.95rem; font-weight: 700; color: #fff; }
+  .score-section { padding: 1.2rem 1rem; display: flex; align-items: center; gap: 1.2rem; }
+  .circle { width: 64px; height: 64px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; font-size: 1.4rem; font-weight: 800; border: 3px solid; }
+  .info h2 { font-size: 1rem; font-weight: 700; }
+  .info p  { font-size: 0.75rem; color: #9ca3af; margin-top: 0.25rem; }
+  .safe       .circle { color:#22c55e; border-color:#22c55e; background:#14532d22; }
+  .suspicious .circle { color:#f59e0b; border-color:#f59e0b; background:#78350f22; }
+  .dangerous  .circle { color:#ef4444; border-color:#ef4444; background:#450a0a22; }
+  .waiting    .circle { color:#6b7280; border-color:#6b7280; background:#1f293722;
+                        animation: pulse 1.2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+  .scanned-url { font-size:0.68rem; color:#4b5563; padding:0 1rem 0.6rem; word-break:break-all; }
+  .findings { padding:0 1rem 1rem; }
+  .finding  { background:#1a1d27; border:1px solid #2d3148; border-radius:6px;
+              padding:0.6rem 0.75rem; margin-bottom:0.45rem; }
+  .ftype { font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; }
+  .fdesc { font-size:0.73rem; color:#9ca3af; margin-top:0.2rem; }
+  .fsnip { font-size:0.68rem; color:#6b7280; margin-top:0.3rem;
+           font-family:monospace; word-break:break-all; }
+  .high{color:#f87171;} .medium{color:#fbbf24;} .low{color:#60a5fa;}
+  .footer { border-top:1px solid #2d3148; padding:0.65rem 1rem;
+            display:flex; justify-content:space-between; align-items:center; }
+  .footer a { font-size:0.72rem; color:#60a5fa; text-decoration:none; }
+  .footer span { font-size:0.7rem; color:#4b5563; }
+  .ai-analysis { margin:0 1rem 0.8rem; background:#1a1d27; border:1px solid #2d3148;
+                 border-left:3px solid #3b4fd8; border-radius:6px; padding:0.7rem 0.8rem; }
+  .ai-label { font-size:0.65rem; font-weight:700; text-transform:uppercase;
+              letter-spacing:.07em; color:#6b7280; margin-bottom:0.35rem; }
+  .ai-text  { font-size:0.75rem; color:#cbd5e1; line-height:1.55; }
+  #debug { background:#131620; border-top:1px solid #2d3148; padding:0.8rem 1rem;
+           font-size:0.68rem; color:#94a3b8; font-family:monospace;
+           line-height:1.8; display:none; white-space:pre-wrap; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <span style="font-size:1.1rem">🛡</span>
+  <h1>Prompt Injection Shield</h1>
+</div>
+
+<div id="content">
+  <div class="score-section waiting">
+    <div class="circle">…</div>
+    <div class="info">
+      <h2>Scanning…</h2>
+      <p>Checking this page</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <a href="http://localhost:7777/dashboard" target="_blank">Open Knowledge Base</a>
+  <span id="note"></span>
+</div>
+
+<div id="debug"></div>
+
+<script src="popup.js"></script>
+</body>
+</html>

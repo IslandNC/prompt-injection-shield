@@ -1,0 +1,45 @@
+{
+  "manifest_version": 2,
+  "name": "Prompt Injection Shield",
+  "version": "1.2.0",
+  "description": "Scans pages for prompt injection attacks before AI assistants process them.",
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "prompt-injection-shield@local",
+      "strict_min_version": "109.0"
+    }
+  },
+
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "notifications"
+  ],
+
+  "browser_action": {
+    "default_icon": "icons/icon48.svg",
+    "default_popup": "popup.html",
+    "default_title": "Prompt Injection Shield"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["compat.js", "content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+
+  "web_accessible_resources": ["onboarding.html"],
+
+  "icons": {
+    "48": "icons/icon48.svg"
+  }
+}

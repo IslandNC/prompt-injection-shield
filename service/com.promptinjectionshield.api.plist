@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.promptinjectionshield.api</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/python3</string>
+        <string>-m</string>
+        <string>uvicorn</string>
+        <string>main:app</string>
+        <string>--port</string>
+        <string>7777</string>
+        <string>--host</string>
+        <string>127.0.0.1</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/islandnc/Documents/Claude/Code/prompt-injection-shield/api</string>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>/tmp/prompt-injection-shield.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/tmp/prompt-injection-shield.err</string>
+
+    <key>ThrottleInterval</key>
+    <integer>10</integer>
+</dict>
+</plist>
