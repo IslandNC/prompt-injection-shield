@@ -34,8 +34,7 @@
   ],
 
   "background": {
-    "service_worker": "background.chrome.js",
-    "type": "module"
+    "service_worker": "background.chrome.js"
   },
 
   "icons": {

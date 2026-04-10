@@ -7,11 +7,12 @@
 
 const url = window.location.href;
 
-// Skip the local API/dashboard — but allow other localhost ports (e.g. /demo test page)
-if (url.startsWith("http://127.0.0.1:7777") ||
-    url.startsWith("http://localhost:7777")  ||
-    url.startsWith("moz-extension://")       ||
-    url.startsWith("about:")) {
+// Skip the local API/dashboard but allow /demo test page
+const _apiBase = ["http://127.0.0.1:7777", "http://localhost:7777"];
+const _skip = _apiBase.some(base => url.startsWith(base)) &&
+              !url.includes("/demo");
+
+if (_skip || url.startsWith("moz-extension://") || url.startsWith("about:")) {
   // do nothing
 } else {
   init();
@@ -22,11 +23,15 @@ function init() {
   setupMutationObserver();
 
   // Listen for scan results sent back from background
-  browser.runtime.onMessage.addListener(function(msg) {
-    if (msg.type === "SCAN_DONE") {
-      renderOverlay(msg.score, msg.level, msg.findings || []);
-    }
-  });
+  try {
+    browser.runtime.onMessage.addListener(function(msg) {
+      if (msg.type === "SCAN_DONE") {
+        renderOverlay(msg.score, msg.level, msg.findings || []);
+      }
+    });
+  } catch (e) {
+    // Chrome MV3: context already invalidated on load, nothing to do
+  }
 }
 
 // ── Text extraction ───────────────────────────────────────────────────────────
@@ -65,7 +70,11 @@ function extractPageText() {
 
 function requestScan() {
   const text = extractPageText();
-  browser.runtime.sendMessage({ type: "SCAN_REQUEST", text, url });
+  try {
+    browser.runtime.sendMessage({ type: "SCAN_REQUEST", text, url });
+  } catch (e) {
+    // Chrome MV3: service worker was restarted — context is stale, ignore
+  }
 }
 
 // ── MutationObserver — re-scan on significant DOM changes ────────────────────

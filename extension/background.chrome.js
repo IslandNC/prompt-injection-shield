@@ -90,7 +90,7 @@ function fireNotification(tabId, result, url) {
     title:   "⚠ Prompt Injection Detected",
     message: count + " finding" + (count !== 1 ? "s" : "") +
              " on " + domain + " — " + topType,
-    iconUrl: "icons/icon48.svg",
+    iconUrl: "icons/icon48.png",
   });
 
   chrome.notifications.onClicked.addListener(function handler(id) {
