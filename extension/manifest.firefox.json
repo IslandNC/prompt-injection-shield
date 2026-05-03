@@ -15,7 +15,8 @@
     "activeTab",
     "storage",
     "tabs",
-    "notifications"
+    "notifications",
+    "http://127.0.0.1:7777/*"
   ],
 
   "browser_action": {
